@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.boddschamber</groupId>
+	<artifactId>boddschiquiz-backend</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Boddschiquiz Backend</name>
+	<description>Boddschiquiz Backend</description>
+	
+	<properties>
+		<!-- project -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<bq.release.version>0.0.1-SNAPSHOT</dlpad.release.version>
+
+		<!-- spring -->
+		<spring.framework.version>3.1.0.RELEASE</spring.framework.version>
+		<spring.security.version>3.1.0.RELEASE</spring.security.version>
+
+		<!-- hibernate -->
+		<hibernate.core.version>3.6.5.Final</hibernate.core.version>
+		<hibernate.entitymanager.version>3.6.5.Final</hibernate.entitymanager.version>
+
+		<!-- zk -->
+		<zk.version>5.0.9</zk.version>
+
+		<!-- maven -->
+		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
+		<maven.war.plugin.version>2.1</maven.war.plugin.version>
+		<maven.assembly.plugin.version>2.2-beta-5</maven.assembly.plugin.version>
+		<maven.dependency.plugin.version>2.1</maven.dependency.plugin.version>
+		<maven.buildnumber.plugin.version>1.0</maven.buildnumber.plugin.version>
+		<maven.jar.plugin.version>2.3.1</maven.jar.plugin.version>
+		<maven.cargo.plugin.version>1.1.1</maven.cargo.plugin.version>
+		
+		<jackson.version>1.9.1</jackson.version>
+
+	</properties>
+	
+	<developers>
+		<developer>
+			<id><![CDATA[booiiing]]></id>
+			<name><![CDATA[Patric Schenke]]></name>
+			<email><![CDATA[booiiing@gmail.com]]></email>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id><![CDATA[Deleh]]></id>
+			<name><![CDATA[Denis Lehmann]]></name>
+			<email><![CDATA[lehmann.denis@gmail.com]]></email>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>${maven.compiler.plugin.version}</version>
+						<configuration>
+							<source>1.6</source>
+							<target>1.6</target>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.4.2</version>
+						<configuration>
+							<skipTests>true</skipTests>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>server</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>${maven.compiler.plugin.version}</version>
+						<configuration>
+							<source>1.6</source>
+							<target>1.6</target>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.4.2</version>
+						<configuration>
+							<skipTests>true</skipTests>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>buildnumber-maven-plugin</artifactId>
+						<version>${maven.buildnumber.plugin.version}</version>
+						<executions>
+							<execution>
+								<phase>validate</phase>
+								<goals>
+									<goal>create</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<doCheck>false</doCheck>
+							<doUpdate>false</doUpdate>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jar-plugin</artifactId>
+						<version>${maven.jar.plugin.version}</version>
+						<configuration>
+							<archive>
+								<manifest>
+									<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+								</manifest>
+								<manifestEntries>
+									<Implementation-Build>${buildNumber}</Implementation-Build>
+								</manifestEntries>
+							</archive>
+						</configuration>
+					</plugin>
+					
+					<!--  
+					<plugin>
+			            <groupId>org.codehaus.cargo</groupId>
+			            <artifactId>cargo-maven2-plugin</artifactId>
+			            <version>${maven.cargo.plugin.version}</version>
+			            <configuration>
+			                <wait>false</wait>
+			                <container>
+			                    <containerId>tomcat6x</containerId>
+			                    <type>remote</type>
+			                </container>
+			                <configuration>
+			                    <type>runtime</type> 
+			                    <properties>
+			                        <cargo.remote.uri>http://192.168.1.30:8080/manager</cargo.remote.uri>
+			                        <cargo.hostname>192.168.1.30</cargo.hostname>
+			                        <cargo.remote.username>admin</cargo.remote.username>
+			                        <cargo.remote.password>supersecret</cargo.remote.password>
+			                    </properties>
+			                    <deployables>
+			                        <deployable>
+			                            <groupId>tv.px</groupId>
+			                            <artifactId>serviceapp-web</artifactId>
+			                            <type>war</type>
+			                            <properties>
+			                            	<context>serviceapp</context>
+			                            </properties>
+			                        </deployable>
+			                    </deployables>
+			                </configuration>
+			            </configuration>
+			            <executions>
+			                <execution>
+			                    <id>verify-deploy</id>
+			                    <phase>install</phase>
+			                    <goals>
+			                        <goal>deployer-deploy</goal>
+			                    </goals>
+			                </execution> 
+			                <execution>
+			                    <id>clean-undeploy</id>
+			                    <phase>pre-clean</phase>
+			                    <goals>
+			                        <goal>deployer-undeploy</goal>
+			                    </goals>
+			                </execution> 
+			            </executions>
+			        </plugin>
+			        -->
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	
+	<organization>
+		<name>Studentenclub Boddschamber</name>
+		<url>http://www.boddschamber.de</url>
+	</organization>
+
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/Boddschamber/Boddschiquiz-Backend/issues</url>
+	</issueManagement>
+
+	<!--ciManagement>
+		<system>hudson</system>
+		<url>http://pxoffice.de/hudson</url>
+		<notifiers>
+			<notifier>
+				<type>mail</type>
+				<sendOnError>true</sendOnError>
+				<sendOnFailure>true</sendOnFailure>
+				<sendOnSuccess>true</sendOnSuccess>
+				<sendOnWarning>true</sendOnWarning>
+				<configuration>
+					<address>build-notify@pixelstream.tv</address>
+				</configuration>
+			</notifier>
+		</notifiers>
+	</ciManagement-->
+	<modules>
+		<module>bq-common</module>
+		<module>bq-domain</module>
+		<module>bq-persistence</module>
+		<module>bq-service</module>
+		<module>bq-web</module>
+		<module>bq-dto</module>
+  </modules>
+	
+</project>
