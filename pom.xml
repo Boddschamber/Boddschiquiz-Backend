@@ -11,7 +11,7 @@
 	<properties>
 		<!-- project -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<bq.release.version>0.0.1-SNAPSHOT</dlpad.release.version>
+		<bq.release.version>0.0.1-SNAPSHOT</bq.release.version>
 
 		<!-- spring -->
 		<spring.framework.version>3.1.0.RELEASE</spring.framework.version>
