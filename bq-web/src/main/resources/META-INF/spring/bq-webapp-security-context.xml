@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:zksp="http://www.zkoss.org/2008/zkspring"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+        http://www.zkoss.org/2008/zkspring http://www.zkoss.org/2008/zkspring/zkspring.xsd">
+
+	<!-- Enable the @Secured annotation to secure service layer methods -->
+	<global-method-security secured-annotations="enabled"  pre-post-annotations="enabled" />
+
+
+	<!-- Secure the page per the URL pattern -->
+	<!-- First all excluded URLs -->
+	<http security="none" pattern="/images/**" />
+	<http security="none" pattern="/styles/**" />
+	<http security="none" pattern="/signup.zul*" />
+
+	<!-- Secure remoting URLs -->
+	<http pattern="/remoting/**" >
+		<http-basic/>
+		<intercept-url pattern="/remoting/**" access="ROLE_TABLET" />
+	</http>
+
+	<!-- Now for the ZK related URL -->
+	<http auto-config="true" >
+		<http-basic/>
+		<session-management session-fixation-protection="newSession" invalid-session-url="/login.zul">
+			<!-- 
+			<concurrency-control max-sessions="1"
+				error-if-maximum-exceeded="true" />
+			-->
+		</session-management>
+
+		
+		<intercept-url pattern="/pages/user/**" access="ROLE_USER" />
+		<intercept-url pattern="/pages/admin/**" access="ROLE_ADMIN" />
+		<!-- views may not be accessed by URL -->
+		<intercept-url pattern="/views/**" access="ROLE_ACCESS_DENIED" />
+		<intercept-url pattern="/*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		
+		
+		<form-login login-page="/login.zul" 
+			authentication-failure-url="/login.zul?error=1"
+			authentication-success-handler-ref="authenticationSuccessHandler" />
+
+		<logout />
+
+	</http>
+	
+	
+	
+
+	<!--authentication-manager>
+		<authentication-provider ref="pxDatabaseAuthenticationProvider" />
+	</authentication-manager-->
+
+</beans:beans>

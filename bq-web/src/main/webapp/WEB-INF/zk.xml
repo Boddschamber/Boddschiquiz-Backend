@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<zk>
+	<listener>
+		<description>ThreadLocal Synchronization Listener</description>
+		<listener-class>org.zkoss.zkplus.util.ThreadLocalListener</listener-class>
+	</listener>
+	
+	<preference>
+		<name>ThreadLocal</name>
+		<value>
+			org.springframework.security.context.ThreadLocalSecurityContextHolderStrategy=contextHolder
+		</value>
+	</preference>
+	
+	<language-config> 
+		<addon-uri>/WEB-INF/lang-addon.xml</addon-uri> 
+	</language-config>
+	
+	<session-config>
+		<device-type>ajax</device-type>
+		<max-upload-size>10000</max-upload-size>
+    	<automatic-timeout/>
+		<timer-keep-alive>true</timer-keep-alive>
+		<timeout-message>Sie haben längere Zeit keine Eingaben getätigt, zu Ihrer Sicherheit wurde daher die Sitzung beendet. Bitte loggen Sie sich wieder ein, um fortzufahren.</timeout-message>
+	</session-config>
+	
+	<library-property>
+		<name>org.zkoss.zul.Button.mold</name>
+		<value>trendy</value>
+	</library-property>
+	
+	<library-property>
+		<name>org.zkoss.zul.progressbox.position</name>
+		<value>center,center</value>
+	</library-property>
+	
+	<library-property>
+    	<name>org.zkoss.zk.ui.macro.autowire.disabled</name>
+        <value>false</value>
+	</library-property>
+	
+	<library-property>
+    	<name>org.zkoss.zk.ui.macro.autoforward.disabled</name>
+        <value>false</value>
+	</library-property>
+	
+</zk>
