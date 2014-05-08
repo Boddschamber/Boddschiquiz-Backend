@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	
+	<appender name="PxConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+  		     <param name="ConversionPattern" value="%d %-5p %c{1} -> %X{principal} %m%n"/>
+		</layout>
+	</appender>
+
+	<appender name="PxFileAppender" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="${user.home}/dlpad.log"/>
+		<layout class="org.apache.log4j.PatternLayout">
+  		     <param name="ConversionPattern" value="%d %-5p %c{1} -> %X{principal} %m%n"/>
+		</layout>
+	</appender>
+	
+	<appender name="PxErrorFileAppender" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="${user.home}/dlpad-errors.log"/>
+		<layout class="org.apache.log4j.PatternLayout">
+  		     <param name="ConversionPattern" value="%d %-5p %c{1} -> %X{principal} %m%n"/>
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="warn" />
+			<param name="LevelMax" value="fatal" />
+		</filter>
+	</appender>
+
+	<!-- hibernate logging -->
+	<logger name="org.hibernate">
+		<level value="warn" />
+	</logger>
+	
+	<!-- security logging -->
+	<logger name="org.springframework.security">
+		<level value="warn" />
+	</logger>
+	
+	<!-- remoting logging -->
+	<logger name="org.springframework.web">
+		<level value="warn" />
+	</logger>
+	
+	<!-- custom remote controller logging -->
+	<!--logger name="tv.px.web.remote">
+		<level value="debug" />
+	</logger-->
+	
+	<!-- CMS controller logging -->
+	<!--logger name="tv.px.web.controller">
+		<level value="warn" />
+	</logger-->
+	
+	<!--root>
+		<priority value="INFO" />
+		<appender-ref ref="PxConsoleAppender" />
+		<appender-ref ref="PxFileAppender" />
+		<appender-ref ref="PxErrorFileAppender" />
+	</root-->
+	
+</log4j:configuration>
